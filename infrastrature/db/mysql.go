@@ -17,7 +17,7 @@ func NewOneBillionDB(db *gorm.DB) *OneBillionDB {
 }
 
 func (o *OneBillionDB) CreateUser(info *model.UserInfo) error {
-	err := o.db.AutoMigrate()
+	err := o.db.AutoMigrate(&model.UserInfo{})
 	if err != nil {
 		fmt.Println(err)
 		return err
