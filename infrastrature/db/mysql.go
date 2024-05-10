@@ -3,8 +3,8 @@ package db
 import (
 	"context"
 	"fmt"
+	"github.com/oneliuliu/user_sdk/domain/model"
 	"gorm.io/gorm"
-	"user_sdk/domain/model"
 )
 
 type OneBillionDB struct {
