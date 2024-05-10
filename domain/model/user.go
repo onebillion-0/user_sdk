@@ -1,10 +1,10 @@
 package model
 
 type UserInfo struct {
-	NickName      string         `json:"nick_name" gorm:"column:nick_name"`
-	Uid           string         `json:"uid" gorm:"column:uid;primary_key;"`
-	Avatar        string         `json:"avatar" gorm:"column:avatar"`
-	SensitiveInfo *SensitiveInfo `json:"sensitive_info" gorm:"column:sensitive_info"`
+	NickName string `json:"nick_name" gorm:"column:nick_name"`
+	Uid      string `json:"uid" gorm:"column:uid;primary_key;"`
+	Avatar   string `json:"avatar" gorm:"column:avatar"`
+	//SensitiveInfo *SensitiveInfo `json:"sensitive_info" gorm:"column:sensitive_info"`
 }
 
 type SensitiveInfo struct {
