@@ -1,4 +1,4 @@
-module user_sdk
+module github.com/oneliuliu/user_sdk
 
 go 1.20
 
