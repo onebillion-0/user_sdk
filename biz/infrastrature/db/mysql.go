@@ -3,7 +3,7 @@ package db
 import (
 	"context"
 	"fmt"
-	"github.com/oneliuliu/user_sdk/domain/model"
+	"github.com/oneliuliu/user_sdk/biz/domain/model"
 	"gorm.io/gorm"
 )
 

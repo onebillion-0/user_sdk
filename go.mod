@@ -3,6 +3,7 @@ module github.com/oneliuliu/user_sdk
 go 1.20
 
 require (
+	golang.org/x/crypto v0.23.0
 	gorm.io/driver/mysql v1.5.6
 	gorm.io/gorm v1.25.10
 )

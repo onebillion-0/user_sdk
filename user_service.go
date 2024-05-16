@@ -1,10 +1,10 @@
 package user_sdk
 
 import (
-	"github.com/oneliuliu/user_sdk/domain/model"
-	db2 "github.com/oneliuliu/user_sdk/infrastrature/db"
+	"github.com/oneliuliu/user_sdk/biz/domain/model"
+	"github.com/oneliuliu/user_sdk/biz/infrastrature/db"
 )
 
 func CreateUser(req *model.UserInfo) error {
-	return db2.NewOneBillionDB(db2.DB).CreateUser(req)
+	return db.NewOneBillionDB(db.DB).CreateUser(req)
 }
