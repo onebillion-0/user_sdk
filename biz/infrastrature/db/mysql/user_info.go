@@ -22,3 +22,7 @@ type SensitiveInfo struct {
 func (UserInfo) TableName() string {
 	return "user_info_new"
 }
+
+func (SensitiveInfo) TableName() string {
+	return "sensitive_info"
+}
