@@ -2,6 +2,7 @@ package mysql
 
 import (
 	"errors"
+	"fmt"
 	"github.com/oneliuliu/user_sdk/biz/domain/entity"
 	"gorm.io/gorm"
 )
@@ -24,6 +25,11 @@ func (repo *GormUserRepository) FindByID(id int64) (*entity.UserInfo, error) {
 
 func (repo *GormUserRepository) Create(user *entity.UserInfo) (*entity.UserInfo, error) {
 	info := toDBUserInfo(user)
+	err := repo.db.AutoMigrate(&UserInfo{})
+	if err != nil {
+		fmt.Println(err)
+		return nil, err
+	}
 	if err := repo.db.Create(&info).Error; err != nil {
 		return nil, err
 	}
