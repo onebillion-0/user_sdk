@@ -16,8 +16,32 @@ type UserInfo struct {
 	UpdateAt      time.Time     `json:"update_at"`
 }
 
-func NewUserInfo() *UserInfo {
-	return &UserInfo{}
+type UserOptionFunc func(*UserInfo)
+
+func WithNickName(nickName string) UserOptionFunc {
+	return func(info *UserInfo) {
+		info.NickName = nickName
+	}
+}
+
+func WithAvatar(avatar string) UserOptionFunc {
+	return func(info *UserInfo) {
+		info.Avatar = avatar
+	}
+}
+
+func WithSensitiveInfo(sensitiveInfo SensitiveInfo) UserOptionFunc {
+	return func(info *UserInfo) {
+		info.SensitiveInfo = sensitiveInfo
+	}
+}
+
+func NewUserInfo(uid int64, optionFunc ...UserOptionFunc) *UserInfo {
+	userInfo := &UserInfo{Id: uid, CreateAt: time.Now(), UpdateAt: time.Now()}
+	for _, fn := range optionFunc {
+		fn(userInfo)
+	}
+	return userInfo
 }
 
 func (u *UserInfo) Validate() error {
@@ -41,11 +65,46 @@ type SensitiveInfo struct {
 	PassWord    string `json:"pass_word"`
 	PhoneNumber string `json:"phone_number"`
 	IdCard      string `json:"id_card"`
-	Age         int64  `json:"age"`
+	Age         int    `json:"age"`
+}
+type SensitiveInfoOption func(*SensitiveInfo)
+
+func WithAge(age int) SensitiveInfoOption {
+	return func(info *SensitiveInfo) {
+		info.Age = age
+	}
 }
 
-func NewSensitiveInfo() *SensitiveInfo {
-	return &SensitiveInfo{}
+func WithSex(sex string) SensitiveInfoOption {
+	return func(info *SensitiveInfo) {
+		info.Sex = sex
+	}
+}
+
+func WithPhoneNumber(phoneNumber string) SensitiveInfoOption {
+	return func(info *SensitiveInfo) {
+		info.PhoneNumber = phoneNumber
+	}
+}
+
+func WithIdCard(idCard string) SensitiveInfoOption {
+	return func(info *SensitiveInfo) {
+		info.IdCard = idCard
+	}
+}
+
+func WithPassWord(passWord string) SensitiveInfoOption {
+	return func(info *SensitiveInfo) {
+		info.PassWord = passWord
+	}
+}
+
+func NewSensitiveInfo(opts ...SensitiveInfoOption) *SensitiveInfo {
+	info := SensitiveInfo{}
+	for _, opt := range opts {
+		opt(&info)
+	}
+	return &info
 }
 
 func (s *SensitiveInfo) Validate() error {
@@ -62,4 +121,12 @@ func (s *SensitiveInfo) Encrypt() error {
 	}
 	s.PassWord = string(encrypted)
 	return nil
+}
+
+func (s *SensitiveInfo) CheckUnEncryptPassWord(unEncryptPassword string) (bool, error) {
+	encrypted, err := bcrypt.GenerateFromPassword([]byte(s.PassWord), bcrypt.DefaultCost)
+	if err != nil {
+		return false, fmt.Errorf("encrypted error: %s", err.Error())
+	}
+	return string(encrypted) == s.PassWord, nil
 }

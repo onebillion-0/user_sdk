@@ -1,4 +1,4 @@
-package postgres
+package mysql
 
 import (
 	"github.com/oneliuliu/user_sdk/biz/domain/entity"

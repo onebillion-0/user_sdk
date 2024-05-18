@@ -1,4 +1,4 @@
-package postgres
+package mysql
 
 import "time"
 
@@ -16,7 +16,7 @@ type SensitiveInfo struct {
 	PassWord    string `json:"pass_word" gorm:"column:pass_word"`
 	PhoneNumber string `json:"phone_number" gorm:"column:phone_number"`
 	IdCard      string `json:"id_card" gorm:"column:id_card"`
-	Age         int64  `json:"age" gorm:"column:age"`
+	Age         int    `json:"age" gorm:"column:age"`
 }
 
 func (UserInfo) TableName() string {

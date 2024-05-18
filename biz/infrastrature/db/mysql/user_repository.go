@@ -1,4 +1,4 @@
-package postgres
+package mysql
 
 import (
 	"errors"
@@ -8,6 +8,10 @@ import (
 
 type GormUserRepository struct {
 	db *gorm.DB
+}
+
+func NewGormUserRepository(db *gorm.DB) *GormUserRepository {
+	return &GormUserRepository{db: db}
 }
 
 func (repo *GormUserRepository) FindByID(id int64) (*entity.UserInfo, error) {
