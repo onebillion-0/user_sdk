@@ -6,7 +6,7 @@ type UserInfo struct {
 	NickName      string        `json:"nick_name" gorm:"column:nick_name"`
 	Uid           int64         `json:"uid" gorm:"column:uid;primary_key;"`
 	Avatar        string        `json:"avatar" gorm:"column:avatar"`
-	SensitiveInfo SensitiveInfo `json:"sensitive_info" gorm:"column:sensitive_info"`
+	SensitiveInfo SensitiveInfo `json:"sensitive_info" gorm:"foreignKey:sensitive_info;references:uid"`
 	CreatedAt     time.Time     `json:"created_at" gorm:"column:created_at"`
 	UpdatedAt     time.Time     `json:"updated_at" gorm:"column:updated_at"`
 }
