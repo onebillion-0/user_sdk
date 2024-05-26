@@ -8,12 +8,13 @@ import (
 )
 
 type UserInfo struct {
-	Id            int64         `json:"id"`
-	NickName      string        `json:"name"`
-	Avatar        string        `json:"avatar"`
-	SensitiveInfo SensitiveInfo `json:"sensitive_info"`
-	CreateAt      time.Time     `json:"create_at"`
-	UpdateAt      time.Time     `json:"update_at"`
+	Id            int64             `json:"id"`
+	NickName      string            `json:"name"`
+	Avatar        string            `json:"avatar"`
+	SensitiveInfo SensitiveInfo     `json:"sensitive_info"`
+	Extra         map[string]string `json:"extra"`
+	CreateAt      time.Time         `json:"create_at"`
+	UpdateAt      time.Time         `json:"update_at"`
 }
 
 type UserOptionFunc func(*UserInfo)
