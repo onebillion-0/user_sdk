@@ -5,8 +5,9 @@ import (
 )
 
 type UserRepository interface {
-	FindByID(id int64) (*entity.UserInfo, error)
+	FindByID(uid int64) (*entity.UserInfo, error)
 	Create(user *entity.UserInfo) (*entity.UserInfo, error)
 	Update(user *entity.UserInfo) (*entity.UserInfo, error)
-	Delete(id int64) error
+	Delete(uid int64) error
+	FindByPhoneNumber(number string) (*entity.UserInfo, error)
 }

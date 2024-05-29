@@ -13,6 +13,7 @@ type UserInfo struct {
 	Avatar        string            `json:"avatar"`
 	SensitiveInfo SensitiveInfo     `json:"sensitive_info"`
 	Extra         map[string]string `json:"extra"`
+	Source        string            `json:"source"`
 	CreateAt      time.Time         `json:"create_at"`
 	UpdateAt      time.Time         `json:"update_at"`
 }

@@ -20,3 +20,11 @@ func (c *CreateUserController) CreateUser(req *request.CreateUserRequest) error 
 	}
 	return c.sev.CreateNewUser(cmd)
 }
+
+func (c *CreateUserController) FindUserByPhoneNumber(phoneNumber string) (bool, error) {
+	info, err := c.sev.GetUserInfoByPhoneNUmber(phoneNumber)
+	if err != nil {
+		return false, err
+	}
+	return info != nil, nil
+}

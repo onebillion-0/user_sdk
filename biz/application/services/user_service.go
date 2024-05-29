@@ -41,6 +41,10 @@ func (s *UserService) GetUserInfo(userId int64) (*entity.UserInfo, error) {
 	return s.userRepository.FindByID(userId)
 }
 
+func (s *UserService) GetUserInfoByPhoneNUmber(number string) (*entity.UserInfo, error) {
+	return s.userRepository.FindByPhoneNumber(number)
+}
+
 func (s *UserService) UserLogin(uid int64, password string) (bool, error) {
 	info, err := s.userRepository.FindByID(uid)
 	if err != nil {

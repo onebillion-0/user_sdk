@@ -16,3 +16,9 @@ func CreateUser(req *request.CreateUserRequest) error {
 	userService := services.NewUserService(gormRepo)
 	return sdk.NewCreateUserController(userService).CreateUser(req)
 }
+
+func CheckUserRegisteredByPhoneNumber(phoneNumber string) (bool, error) {
+	gormRepo := mysql.NewGormUserRepository(mysql.Connection)
+	userService := services.NewUserService(gormRepo)
+	return sdk.NewCreateUserController(userService).FindUserByPhoneNumber(phoneNumber)
+}

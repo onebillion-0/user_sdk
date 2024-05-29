@@ -15,9 +15,17 @@ func NewGormUserRepository(db *gorm.DB) *GormUserRepository {
 	return &GormUserRepository{db: db}
 }
 
-func (repo *GormUserRepository) FindByID(id int64) (*entity.UserInfo, error) {
+func (repo *GormUserRepository) FindByID(uid int64) (*entity.UserInfo, error) {
 	var info UserInfo
-	if err := repo.db.Preload("user_info").First(&info, id).Error; err != nil {
+	if err := repo.db.Preload("user_info").Where("id = ?", uid).First(&info).Error; err != nil {
+		return nil, err
+	}
+	return fromDBUserInfo(&info), nil
+}
+
+func (repo *GormUserRepository) FindByPhoneNumber(number string) (*entity.UserInfo, error) {
+	var info UserInfo
+	if err := repo.db.Preload("user_info").Where("phone_number = ?", number).First(&info).Error; err != nil {
 		return nil, err
 	}
 	return fromDBUserInfo(&info), nil
