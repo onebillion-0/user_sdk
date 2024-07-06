@@ -42,8 +42,9 @@ func (r *RegisterService) RegisterMembers(ctx context.Context, cmds []*command.S
 	return r.Member.BatchCreate(ctx, users)
 }
 
-func (r *RegisterService) RegisterAppId() error {
-	return nil
+func (r *RegisterService) RegisterAppId(ctx context.Context, appid int64) error {
+	_, err := r.System.CreateByAppID(ctx, appid)
+	return err
 }
 
 func (r *RegisterService) GetAllAppID(ctx context.Context) ([]int64, error) {
