@@ -41,7 +41,7 @@ func (s *UserService) GetUserInfo(userId int64) (*entity.UserInfo, error) {
 	return s.userRepository.FindByID(userId)
 }
 
-func (s *UserService) GetUserInfoByPhoneNUmber(number string) (*entity.UserInfo, error) {
+func (s *UserService) GetUserInfoByPhoneNumber(number string) (*entity.UserInfo, error) {
 	return s.userRepository.FindByPhoneNumber(number)
 }
 

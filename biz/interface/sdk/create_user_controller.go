@@ -22,7 +22,7 @@ func (c *CreateUserController) CreateUser(req *request.CreateUserRequest) error 
 }
 
 func (c *CreateUserController) FindUserByPhoneNumber(phoneNumber string) (bool, error) {
-	info, err := c.sev.GetUserInfoByPhoneNUmber(phoneNumber)
+	info, err := c.sev.GetUserInfoByPhoneNumber(phoneNumber)
 	if err != nil {
 		return false, err
 	}
