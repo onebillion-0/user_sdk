@@ -7,9 +7,8 @@ const Admin Role = "admin"
 const Teacher Role = "teacher"
 
 type Member struct {
-	Id         int64  `json:"id" bson:"id"`
 	Uid        int64  `json:"uid" bson:"uid"`
-	Name       string `json:"name" bson:"name"`
+	NickName   string `json:"nick_name" bson:"nick_name"`
 	Age        int64  `json:"age" bson:"age"`
 	Password   string `json:"password" bson:"password"`
 	Gender     string `json:"gender" bson:"gender"`

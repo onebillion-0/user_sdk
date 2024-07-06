@@ -1,7 +1,6 @@
 package school_members
 
 type SuperAdmin struct {
-	Id         int64  `json:"id" bson:"id"`
 	Uid        int64  `json:"uid" bson:"uid"`
 	Name       string `json:"name" bson:"name"`
 	Age        int64  `json:"age" bson:"age"`

@@ -10,3 +10,9 @@ type CreateUserCommand struct {
 	IdCard      string
 	Age         int
 }
+
+type MemberCommand struct {
+	Uid      int64
+	NickName string
+	Password string
+}

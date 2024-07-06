@@ -40,19 +40,14 @@ func (repo *MongoSystemRepository) FindByAppID(ctx context.Context, appid int64)
 }
 
 func (repo *MongoSystemRepository) CreateByAppID(ctx context.Context, appid int64) (*school_members.System, error) {
-	id, err := repo.flake.NextID()
-	if err != nil {
-		return nil, fmt.Errorf("failed to generate ID: %v", err)
-	}
 
 	now := time.Now().Unix()
 	newSystem := &school_members.System{
-		Id:         int64(id),
 		AppId:      appid,
 		CreateTime: now,
 		UpdateTime: now,
 	}
-	_, err = repo.collection.InsertOne(ctx, newSystem)
+	_, err := repo.collection.InsertOne(ctx, newSystem)
 	if err != nil {
 		return nil, err
 	}

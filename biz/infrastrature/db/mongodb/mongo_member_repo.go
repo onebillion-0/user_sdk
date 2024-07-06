@@ -66,3 +66,33 @@ func (repo *MongoStudentRepository) Update(ctx context.Context, student *school_
 	}
 	return student, nil
 }
+
+func (repo *MongoStudentRepository) BatchCreate(ctx context.Context, users []*school_members.Member) error {
+	users, err := repo.initMemberModels(users)
+	if err != nil {
+		return err
+	}
+
+	models := make([]mongo.WriteModel, 0, len(users))
+	for _, user := range users {
+		model := mongo.NewInsertOneModel()
+		model.SetDocument(user)
+		models = append(models, model)
+	}
+	_, err = repo.collection.BulkWrite(ctx, models)
+	return err
+}
+
+func (repo *MongoStudentRepository) initMemberModels(users []*school_members.Member) ([]*school_members.Member, error) {
+	now := time.Now().Unix()
+	for _, user := range users {
+		hashedPassword, err := bcrypt.GenerateFromPassword([]byte(user.Password), bcrypt.DefaultCost)
+		if err != nil {
+			return nil, err
+		}
+		user.Password = string(hashedPassword)
+		user.CreateTime = now
+		user.UpdateTime = now
+	}
+	return users, nil
+}

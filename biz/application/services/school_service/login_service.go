@@ -14,7 +14,6 @@ import (
 
 type LoginService struct {
 	Student repositories.MemberRepository
-	System  repositories.SystemRepository
 }
 
 type Claims struct {
@@ -25,10 +24,9 @@ type Claims struct {
 
 var jwtKey = []byte("your_secret_key")
 
-func NewLoginService(stu repositories.MemberRepository, sys repositories.SystemRepository) *LoginService {
+func NewLoginService(stu repositories.MemberRepository) *LoginService {
 	return &LoginService{
 		Student: stu,
-		System:  sys,
 	}
 }
 
