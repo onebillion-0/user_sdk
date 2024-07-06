@@ -10,4 +10,5 @@ type SystemRepository interface {
 	CreateByAppID(ctx context.Context, appid int64) (*school_members.System, error)
 	Update(ctx context.Context, sys *school_members.System) (*school_members.System, error)
 	Delete(ctx context.Context, appid int64) error
+	GetAll(ctx context.Context) ([]*school_members.System, error)
 }

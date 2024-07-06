@@ -70,3 +70,17 @@ func (repo *MongoSystemRepository) Delete(ctx context.Context, appid int64) erro
 	_, err := repo.collection.DeleteOne(ctx, filter)
 	return err
 }
+
+func (repo *MongoSystemRepository) GetAll(ctx context.Context) ([]*school_members.System, error) {
+	cusor, err := repo.collection.Find(ctx, bson.M{})
+	if err != nil {
+		return nil, err
+	}
+	defer cusor.Close(ctx)
+	result := make([]*school_members.System, 0)
+	err = cusor.All(ctx, result)
+	if err != nil {
+		return nil, err
+	}
+	return result, nil
+}

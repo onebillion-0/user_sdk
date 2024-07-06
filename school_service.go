@@ -20,3 +20,9 @@ func SchoolMemberRegister(ctx context.Context, command []*command.SchoolMemberCo
 	sys := mongodb.NewMongoSystemRepository(mongodb.MongoClient, mongo_table.GetSysCollectionName())
 	return school_service.NewRegisterService(member, sys).RegisterMembers(ctx, command)
 }
+
+func GetAppIDList(ctx context.Context) (appIDList []int64, err error) {
+	member := mongodb.NewMongoMemberRepository(mongodb.MongoClient, mongo_table.GetMemberCollectionName())
+	sys := mongodb.NewMongoSystemRepository(mongodb.MongoClient, mongo_table.GetSysCollectionName())
+	return school_service.NewRegisterService(member, sys).GetAllAppID(ctx)
+}

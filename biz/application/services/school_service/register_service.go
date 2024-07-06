@@ -45,3 +45,15 @@ func (r *RegisterService) RegisterMembers(ctx context.Context, cmds []*command.S
 func (r *RegisterService) RegisterAppId() error {
 	return nil
 }
+
+func (r *RegisterService) GetAllAppID(ctx context.Context) ([]int64, error) {
+	models, err := r.System.GetAll(ctx)
+	if err != nil {
+		return nil, err
+	}
+	result := make([]int64, 0, len(models))
+	for _, m := range models {
+		result = append(result, m.AppId)
+	}
+	return result, nil
+}
