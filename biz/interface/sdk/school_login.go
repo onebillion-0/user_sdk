@@ -21,7 +21,3 @@ func (c *SchoolLoginController) Login(ctx context.Context, uid int64, password s
 
 type SchoolRegisterController struct {
 }
-
-func NewSchoolRegisterController() *SchoolRegisterController {
-
-}
