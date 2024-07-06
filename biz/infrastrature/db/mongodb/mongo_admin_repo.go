@@ -2,8 +2,8 @@ package mongodb
 
 import (
 	"context"
-	"github.com/oneliuliu/user_sdk/biz/domain/entity/school_members"
-	"github.com/oneliuliu/user_sdk/biz/domain/repositories"
+	"github.com/onebillion-0/user_sdk/biz/domain/entity/school_members"
+	"github.com/onebillion-0/user_sdk/biz/domain/repositories"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 	"golang.org/x/crypto/bcrypt"

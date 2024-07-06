@@ -3,8 +3,8 @@ package mongodb
 import (
 	"context"
 	"fmt"
-	"github.com/oneliuliu/user_sdk/biz/domain/entity/school_members"
-	"github.com/oneliuliu/user_sdk/biz/domain/repositories"
+	"github.com/onebillion-0/user_sdk/biz/domain/entity/school_members"
+	"github.com/onebillion-0/user_sdk/biz/domain/repositories"
 	"github.com/sony/sonyflake"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"

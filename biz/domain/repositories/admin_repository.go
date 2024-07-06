@@ -2,7 +2,7 @@ package repositories
 
 import (
 	"context"
-	"github.com/oneliuliu/user_sdk/biz/domain/entity/school_members"
+	"github.com/onebillion-0/user_sdk/biz/domain/entity/school_members"
 )
 
 type AdminRepository interface {

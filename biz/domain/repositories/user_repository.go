@@ -1,7 +1,7 @@
 package repositories
 
 import (
-	"github.com/oneliuliu/user_sdk/biz/domain/entity"
+	"github.com/onebillion-0/user_sdk/biz/domain/entity"
 )
 
 type UserRepository interface {

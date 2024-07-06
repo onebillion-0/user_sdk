@@ -3,7 +3,7 @@ package sdk
 import (
 	"context"
 
-	"github.com/oneliuliu/user_sdk/biz/application/services/school_service"
+	"github.com/onebillion-0/user_sdk/biz/application/services/school_service"
 )
 
 type SchoolLoginController struct {

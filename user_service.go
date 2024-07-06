@@ -2,10 +2,10 @@ package user_sdk
 
 import (
 	"errors"
-	"github.com/oneliuliu/user_sdk/biz/application/services"
-	"github.com/oneliuliu/user_sdk/biz/infrastrature/db/mysql"
-	"github.com/oneliuliu/user_sdk/biz/interface/sdk"
-	"github.com/oneliuliu/user_sdk/biz/interface/sdk/dto/request"
+	"github.com/onebillion-0/user_sdk/biz/application/services"
+	"github.com/onebillion-0/user_sdk/biz/infrastrature/db/mysql"
+	"github.com/onebillion-0/user_sdk/biz/interface/sdk"
+	"github.com/onebillion-0/user_sdk/biz/interface/sdk/dto/request"
 )
 
 func CreateUser(req *request.CreateUserRequest) error {

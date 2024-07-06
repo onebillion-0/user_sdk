@@ -1,8 +1,8 @@
 package sdk
 
 import (
-	"github.com/oneliuliu/user_sdk/biz/application/services"
-	"github.com/oneliuliu/user_sdk/biz/interface/sdk/dto/request"
+	"github.com/onebillion-0/user_sdk/biz/application/services"
+	"github.com/onebillion-0/user_sdk/biz/interface/sdk/dto/request"
 )
 
 type CreateUserController struct {

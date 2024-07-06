@@ -1,7 +1,7 @@
 package mysql
 
 import (
-	"github.com/oneliuliu/user_sdk/biz/domain/entity"
+	"github.com/onebillion-0/user_sdk/biz/domain/entity"
 )
 
 func fromDBUserInfo(info *UserInfo) *entity.UserInfo {

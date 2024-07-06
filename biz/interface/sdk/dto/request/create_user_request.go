@@ -2,7 +2,7 @@ package request
 
 import (
 	"fmt"
-	"github.com/oneliuliu/user_sdk/biz/application/command"
+	"github.com/onebillion-0/user_sdk/biz/application/command"
 	"strconv"
 )
 
