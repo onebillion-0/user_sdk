@@ -78,7 +78,7 @@ func (repo *MongoSystemRepository) GetAll(ctx context.Context) ([]*school_member
 	}
 	defer cusor.Close(ctx)
 	result := make([]*school_members.System, 0)
-	err = cusor.All(ctx, result)
+	err = cusor.All(ctx, &result)
 	if err != nil {
 		return nil, err
 	}
