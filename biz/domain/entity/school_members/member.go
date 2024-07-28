@@ -8,6 +8,7 @@ const Teacher Role = "teacher"
 
 type Member struct {
 	Uid        int64  `json:"uid" bson:"uid"`
+	ClassId    int64  `json:"class_id" bson:"class_id"`
 	NickName   string `json:"nick_name" bson:"nick_name"`
 	Age        int64  `json:"age" bson:"age"`
 	Password   string `json:"password" bson:"password"`
