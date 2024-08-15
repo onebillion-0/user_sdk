@@ -1,10 +1,10 @@
 package school_members
 
 type System struct {
-	AppId      int64 `json:"app_id"        bson:"app_id"`
-	SystemName int64 `json:"system_name"   bson:"system_name"`
-	CreateTime int64 `json:"create_time"   bson:"create_time"`
-	UpdateTime int64 `json:"update_time"   bson:"update_time"`
+	AppId      int64  `json:"app_id"        bson:"app_id"`
+	SystemName string `json:"system_name"   bson:"system_name"`
+	CreateTime int64  `json:"create_time"   bson:"create_time"`
+	UpdateTime int64  `json:"update_time"   bson:"update_time"`
 }
 
 type Class struct {

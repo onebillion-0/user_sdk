@@ -10,17 +10,17 @@ import (
 	"time"
 )
 
-type MongoStudentRepository struct {
+type MongoSchoolMemberRepository struct {
 	collection *mongo.Collection
 }
 
 func NewMongoMemberRepository(db *mongo.Database, collectionName string) repositories.MemberRepository {
-	return &MongoStudentRepository{
+	return &MongoSchoolMemberRepository{
 		collection: db.Collection(collectionName),
 	}
 }
 
-func (repo *MongoStudentRepository) FindByID(ctx context.Context, uid int64) (*school_members.Member, error) {
+func (repo *MongoSchoolMemberRepository) FindByID(ctx context.Context, uid int64) (*school_members.Member, error) {
 	var student school_members.Member
 	filter := bson.D{{"uid", uid}}
 	err := repo.collection.FindOne(ctx, filter).Decode(&student)
@@ -30,7 +30,7 @@ func (repo *MongoStudentRepository) FindByID(ctx context.Context, uid int64) (*s
 	return &student, nil
 }
 
-func (repo *MongoStudentRepository) FindByUsername(ctx context.Context, username string) (*school_members.Member, error) {
+func (repo *MongoSchoolMemberRepository) FindByUsername(ctx context.Context, username string) (*school_members.Member, error) {
 	var student school_members.Member
 	filter := bson.D{{"name", username}}
 	err := repo.collection.FindOne(ctx, filter).Decode(&student)
@@ -40,7 +40,7 @@ func (repo *MongoStudentRepository) FindByUsername(ctx context.Context, username
 	return &student, nil
 }
 
-func (repo *MongoStudentRepository) Create(ctx context.Context, student *school_members.Member) (*school_members.Member, error) {
+func (repo *MongoSchoolMemberRepository) Create(ctx context.Context, student *school_members.Member) (*school_members.Member, error) {
 	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(student.Password), bcrypt.DefaultCost)
 	if err != nil {
 		return nil, err
@@ -56,7 +56,7 @@ func (repo *MongoStudentRepository) Create(ctx context.Context, student *school_
 	return student, nil
 }
 
-func (repo *MongoStudentRepository) Update(ctx context.Context, student *school_members.Member) (*school_members.Member, error) {
+func (repo *MongoSchoolMemberRepository) Update(ctx context.Context, student *school_members.Member) (*school_members.Member, error) {
 	student.UpdateTime = time.Now().Unix()
 	filter := bson.D{{"uid", student.Uid}}
 	update := bson.D{{"$set", student}}
@@ -67,7 +67,7 @@ func (repo *MongoStudentRepository) Update(ctx context.Context, student *school_
 	return student, nil
 }
 
-func (repo *MongoStudentRepository) BatchCreate(ctx context.Context, users []*school_members.Member) error {
+func (repo *MongoSchoolMemberRepository) BatchCreate(ctx context.Context, users []*school_members.Member) error {
 	users, err := repo.initMemberModels(users)
 	if err != nil {
 		return err
@@ -83,7 +83,21 @@ func (repo *MongoStudentRepository) BatchCreate(ctx context.Context, users []*sc
 	return err
 }
 
-func (repo *MongoStudentRepository) initMemberModels(users []*school_members.Member) ([]*school_members.Member, error) {
+func (repo *MongoSchoolMemberRepository) FindByClassID(ctx context.Context, classId int64) ([]*school_members.Member, error) {
+	var student []*school_members.Member
+	filter := bson.D{{"class_id", classId}}
+	cursor, err := repo.collection.Find(ctx, filter)
+	if err != nil {
+		return nil, err
+	}
+	err = cursor.All(ctx, &student)
+	if err != nil {
+		return nil, err
+	}
+	return student, nil
+}
+
+func (repo *MongoSchoolMemberRepository) initMemberModels(users []*school_members.Member) ([]*school_members.Member, error) {
 	now := time.Now().Unix()
 	for _, user := range users {
 		hashedPassword, err := bcrypt.GenerateFromPassword([]byte(user.Password), bcrypt.DefaultCost)

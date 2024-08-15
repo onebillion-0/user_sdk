@@ -6,6 +6,7 @@ type SchoolMemberCommand struct {
 	NickName string
 	Uid      int64
 	Age      int64
+	ClassId  int64
 	Password string
 	Appid    int64
 	Gender   string

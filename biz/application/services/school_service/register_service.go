@@ -42,8 +42,8 @@ func (r *RegisterService) RegisterMembers(ctx context.Context, cmds []*command.S
 	return r.Member.BatchCreate(ctx, users)
 }
 
-func (r *RegisterService) RegisterAppId(ctx context.Context, appid int64) error {
-	_, err := r.System.CreateByAppID(ctx, appid)
+func (r *RegisterService) RegisterAppId(ctx context.Context, appid int64, name string) error {
+	_, err := r.System.CreateByAppID(ctx, appid, name)
 	return err
 }
 
@@ -57,4 +57,12 @@ func (r *RegisterService) GetAllAppID(ctx context.Context) ([]int64, error) {
 		result = append(result, m.AppId)
 	}
 	return result, nil
+}
+
+func (r *RegisterService) GetRoleById(ctx context.Context, id int64) (school_members.Role, error) {
+	member, err := r.Member.FindByID(ctx, id)
+	if err != nil {
+		return "", err
+	}
+	return member.Role, nil
 }

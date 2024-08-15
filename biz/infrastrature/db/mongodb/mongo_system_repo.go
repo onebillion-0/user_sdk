@@ -39,11 +39,12 @@ func (repo *MongoSystemRepository) FindByAppID(ctx context.Context, appid int64)
 	return &system, nil
 }
 
-func (repo *MongoSystemRepository) CreateByAppID(ctx context.Context, appid int64) (*school_members.System, error) {
+func (repo *MongoSystemRepository) CreateByAppID(ctx context.Context, appid int64, name string) (*school_members.System, error) {
 
 	now := time.Now().Unix()
 	newSystem := &school_members.System{
 		AppId:      appid,
+		SystemName: name,
 		CreateTime: now,
 		UpdateTime: now,
 	}
