@@ -36,6 +36,7 @@ func (r *RegisterService) RegisterMembers(ctx context.Context, cmds []*command.S
 			AppId:    cmd.Appid,
 			Gender:   cmd.Gender,
 			Role:     cmd.Role,
+			ClassId:  cmd.ClassId,
 		}
 		users = append(users, user)
 	}
