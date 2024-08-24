@@ -28,7 +28,7 @@ func SchoolSystemRegister(ctx context.Context, appid int64, name string) error {
 	return school_service.NewRegisterService(member, sys).RegisterAppId(ctx, appid, name)
 }
 
-func GetAppIDList(ctx context.Context) (appIDList []int64, err error) {
+func GetAppIDList(ctx context.Context) (appIDList map[int64]string, err error) {
 	member := mongodb.NewMongoMemberRepository(mongodb.MongoClient, mongo_table.GetMemberCollectionName())
 	sys := mongodb.NewMongoSystemRepository(mongodb.MongoClient, mongo_table.GetSysCollectionName())
 	return school_service.NewRegisterService(member, sys).GetAllAppID(ctx)

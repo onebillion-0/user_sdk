@@ -47,14 +47,14 @@ func (r *RegisterService) RegisterAppId(ctx context.Context, appid int64, name s
 	return err
 }
 
-func (r *RegisterService) GetAllAppID(ctx context.Context) ([]int64, error) {
+func (r *RegisterService) GetAllAppID(ctx context.Context) (map[int64]string, error) {
 	models, err := r.System.GetAll(ctx)
 	if err != nil {
 		return nil, err
 	}
-	result := make([]int64, 0, len(models))
+	result := make(map[int64]string, 0)
 	for _, m := range models {
-		result = append(result, m.AppId)
+		result[m.AppId] = m.SystemName
 	}
 	return result, nil
 }
