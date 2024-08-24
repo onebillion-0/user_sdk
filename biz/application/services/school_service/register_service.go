@@ -43,6 +43,27 @@ func (r *RegisterService) RegisterMembers(ctx context.Context, cmds []*command.S
 	return r.Member.BatchCreate(ctx, users)
 }
 
+func (r *RegisterService) MGetStudents(ctx context.Context, page int, size int) (int, []command.SchoolMemberCommand, error) {
+	count, members, err := r.Member.MGetStudents(ctx, page, size)
+	if err != nil {
+		return 0, nil, err
+	}
+	res := make([]command.SchoolMemberCommand, 0, len(members))
+	for _, cmd := range members {
+		res = append(res, command.SchoolMemberCommand{
+			NickName: cmd.NickName,
+			Uid:      cmd.Uid,
+			Age:      cmd.Age,
+			Password: cmd.Password,
+			Appid:    cmd.AppId,
+			Gender:   cmd.Gender,
+			Role:     cmd.Role,
+			ClassId:  cmd.ClassId,
+		})
+	}
+	return count, res, nil
+}
+
 func (r *RegisterService) RegisterAppId(ctx context.Context, appid int64, name string) error {
 	_, err := r.System.CreateByAppID(ctx, appid, name)
 	return err

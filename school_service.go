@@ -22,6 +22,12 @@ func SchoolMemberRegister(ctx context.Context, command []*command.SchoolMemberCo
 	return school_service.NewRegisterService(member, sys).RegisterMembers(ctx, command)
 }
 
+func MGetStudents(ctx context.Context, page int, size int) (int, []command.SchoolMemberCommand, error) {
+	member := mongodb.NewMongoMemberRepository(mongodb.MongoClient, mongo_table.GetMemberCollectionName())
+	sys := mongodb.NewMongoSystemRepository(mongodb.MongoClient, mongo_table.GetSysCollectionName())
+	return school_service.NewRegisterService(member, sys).MGetStudents(ctx, page, size)
+}
+
 func SchoolSystemRegister(ctx context.Context, appid int64, name string) error {
 	member := mongodb.NewMongoMemberRepository(mongodb.MongoClient, mongo_table.GetMemberCollectionName())
 	sys := mongodb.NewMongoSystemRepository(mongodb.MongoClient, mongo_table.GetSysCollectionName())
