@@ -10,7 +10,7 @@ import (
 	"github.com/onebillion-0/user_sdk/biz/interface/sdk"
 )
 
-func SchoolMemberLogin(ctx context.Context, uid int64, password string) (token string, err error) {
+func SchoolMemberLogin(ctx context.Context, uid int64, password string) (token string, cmd *command.SchoolMemberCommand, err error) {
 	mongoRepo := mongodb.NewMongoMemberRepository(mongodb.MongoClient, mongo_table.GetMemberCollectionName())
 	sev := school_service.NewLoginService(mongoRepo)
 	return sdk.NewSchoolLoginController(sev).Login(ctx, uid, password)
