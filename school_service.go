@@ -2,6 +2,7 @@ package user_sdk
 
 import (
 	"context"
+
 	"github.com/onebillion-0/user_sdk/biz/application/command"
 	"github.com/onebillion-0/user_sdk/biz/application/services/school_service"
 	"github.com/onebillion-0/user_sdk/biz/domain/entity/school_members"
@@ -44,4 +45,10 @@ func GetRoleByID(ctx context.Context, id int64) (school_members.Role, error) {
 	member := mongodb.NewMongoMemberRepository(mongodb.MongoClient, mongo_table.GetMemberCollectionName())
 	sys := mongodb.NewMongoSystemRepository(mongodb.MongoClient, mongo_table.GetSysCollectionName())
 	return school_service.NewRegisterService(member, sys).GetRoleById(ctx, id)
+}
+
+func GetUserInfoByID(ctx context.Context, id int64) (*school_members.Member, error) {
+	member := mongodb.NewMongoMemberRepository(mongodb.MongoClient, mongo_table.GetMemberCollectionName())
+	sys := mongodb.NewMongoSystemRepository(mongodb.MongoClient, mongo_table.GetSysCollectionName())
+	return school_service.NewRegisterService(member, sys).GetUserInfoByID(ctx, id)
 }

@@ -2,6 +2,7 @@ package school_service
 
 import (
 	"context"
+
 	"github.com/onebillion-0/user_sdk/biz/application/command"
 	"github.com/onebillion-0/user_sdk/biz/domain/entity/school_members"
 	"github.com/onebillion-0/user_sdk/biz/domain/repositories"
@@ -87,4 +88,12 @@ func (r *RegisterService) GetRoleById(ctx context.Context, id int64) (school_mem
 		return "", err
 	}
 	return member.Role, nil
+}
+
+func (r *RegisterService) GetUserInfoByID(ctx context.Context, id int64) (*school_members.Member, error) {
+	member, err := r.Member.FindByID(ctx, id)
+	if err != nil {
+		return nil, err
+	}
+	return member, nil
 }
