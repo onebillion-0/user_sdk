@@ -8,6 +8,7 @@ import (
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 	"golang.org/x/crypto/bcrypt"
+	"sync"
 	"time"
 )
 
@@ -15,11 +16,13 @@ type MongoSchoolMemberRepository struct {
 	collection *mongo.Collection
 }
 
+var memberSyncOnce sync.Once
+
 func NewMongoMemberRepository(db *mongo.Database, collectionName string) repositories.MemberRepository {
 	repo := &MongoSchoolMemberRepository{
 		collection: db.Collection(collectionName),
 	}
-	once.Do(repo.init)
+	memberSyncOnce.Do(repo.init)
 	return repo
 }
 
