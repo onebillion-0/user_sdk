@@ -8,6 +8,8 @@ import (
 	"github.com/sony/sonyflake"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
+	"go.mongodb.org/mongo-driver/mongo/options"
+	"sync"
 	"time"
 )
 
@@ -16,6 +18,8 @@ type MongoSystemRepository struct {
 	flake      *sonyflake.Sonyflake
 }
 
+var once sync.Once
+
 func NewMongoSystemRepository(db *mongo.Database, collectionName string) repositories.SystemRepository {
 	// 初始化sonyflake
 	st := sonyflake.Settings{}
@@ -23,9 +27,22 @@ func NewMongoSystemRepository(db *mongo.Database, collectionName string) reposit
 	if flake == nil {
 		panic(fmt.Errorf("sonyflake not created"))
 	}
-	return &MongoSystemRepository{
+	repo := &MongoSystemRepository{
 		collection: db.Collection(collectionName),
 		flake:      flake,
+	}
+	once.Do(repo.init)
+	return repo
+}
+
+func (repo *MongoSystemRepository) init() {
+	indexModel := mongo.IndexModel{
+		Keys:    bson.D{{Key: "id", Value: 1}},
+		Options: options.Index().SetUnique(true),
+	}
+	_, err := repo.collection.Indexes().CreateOne(context.TODO(), indexModel)
+	if err != nil {
+		panic(err)
 	}
 }
 

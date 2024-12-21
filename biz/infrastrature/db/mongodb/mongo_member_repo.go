@@ -16,8 +16,21 @@ type MongoSchoolMemberRepository struct {
 }
 
 func NewMongoMemberRepository(db *mongo.Database, collectionName string) repositories.MemberRepository {
-	return &MongoSchoolMemberRepository{
+	repo := &MongoSchoolMemberRepository{
 		collection: db.Collection(collectionName),
+	}
+	once.Do(repo.init)
+	return repo
+}
+
+func (repo *MongoSchoolMemberRepository) init() {
+	indexModel := mongo.IndexModel{
+		Keys:    bson.D{{Key: "uid", Value: 1}},
+		Options: options.Index().SetUnique(true),
+	}
+	_, err := repo.collection.Indexes().CreateOne(context.TODO(), indexModel)
+	if err != nil {
+		panic(err)
 	}
 }
 
