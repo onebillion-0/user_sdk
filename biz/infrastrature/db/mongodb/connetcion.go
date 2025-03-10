@@ -5,17 +5,26 @@ import (
 	"fmt"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
+	"os"
 )
 
 var MongoClient *mongo.Database
 
-func init() {
+const (
+	LiveMongoUrl = "mongodb://live-mongo.letcode.cc:27017"
+	TestMongoUrl = "mongodb://test-mongo.letcode.cc:27017"
+)
 
+func init() {
+	url := TestMongoUrl
+	if os.Getenv("env") == "live" {
+		url = LiveMongoUrl
+	}
 	cre := options.Credential{
 		Username: "root",
 		Password: "e9945f1586f5",
 	}
-	clientOptions := options.Client().ApplyURI("mongodb://172.30.179.120:27017").SetAuth(cre)
+	clientOptions := options.Client().ApplyURI(url).SetAuth(cre)
 	// 连接到 MongoDB
 	client, err := mongo.Connect(context.TODO(), clientOptions)
 	if err != nil {
