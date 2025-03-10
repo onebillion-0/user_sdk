@@ -5,6 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"github.com/dgrijalva/jwt-go"
+	"github.com/onebillion-0/user_sdk/biz/application/command"
 	"github.com/onebillion-0/user_sdk/biz/constants"
 	"github.com/onebillion-0/user_sdk/biz/domain/repositories"
 	"go.mongodb.org/mongo-driver/mongo"
@@ -30,18 +31,18 @@ func NewLoginService(stu repositories.MemberRepository) *LoginService {
 	}
 }
 
-func (s *LoginService) Login(ctx context.Context, uid int64, password string) (string, error) {
+func (s *LoginService) Login(ctx context.Context, uid int64, password string) (string, *command.SchoolMemberCommand, error) {
 	member, err := s.Student.FindByID(ctx, uid)
 	if errors.Is(err, mongo.ErrNoDocuments) {
-		return "", constants.ERROR_INVALID_USERNAME_OR_PASSWORD
+		return "", nil, constants.ERROR_INVALID_USERNAME_OR_PASSWORD
 	}
 	if err != nil {
 		fmt.Println("find admin fail, error:", err)
-		return "", err
+		return "", nil, err
 	}
 
 	if err := bcrypt.CompareHashAndPassword([]byte(member.Password), []byte(password)); err != nil {
-		return "", err
+		return "", nil, err
 	}
 
 	expirationTime := time.Now().Add(24 * time.Hour)
@@ -56,10 +57,18 @@ func (s *LoginService) Login(ctx context.Context, uid int64, password string) (s
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 	tokenString, err := token.SignedString(jwtKey)
 	if err != nil {
-		return "", err
+		return "", nil, err
 	}
-
-	return tokenString, nil
+	cmd := &command.SchoolMemberCommand{
+		NickName: member.NickName,
+		Uid:      member.Uid,
+		Age:      member.Age,
+		Appid:    member.AppId,
+		Gender:   member.Gender,
+		Role:     member.Role,
+		ClassId:  member.ClassId,
+	}
+	return tokenString, cmd, nil
 }
 func (s *LoginService) ParseToken(tokenStr string) (*Claims, error) {
 	claims := &Claims{}

@@ -2,6 +2,7 @@ package school_service
 
 import (
 	"context"
+
 	"github.com/onebillion-0/user_sdk/biz/application/command"
 	"github.com/onebillion-0/user_sdk/biz/domain/entity/school_members"
 	"github.com/onebillion-0/user_sdk/biz/domain/repositories"
@@ -36,25 +37,63 @@ func (r *RegisterService) RegisterMembers(ctx context.Context, cmds []*command.S
 			AppId:    cmd.Appid,
 			Gender:   cmd.Gender,
 			Role:     cmd.Role,
+			ClassId:  cmd.ClassId,
 		}
 		users = append(users, user)
 	}
 	return r.Member.BatchCreate(ctx, users)
 }
 
-func (r *RegisterService) RegisterAppId(ctx context.Context, appid int64) error {
-	_, err := r.System.CreateByAppID(ctx, appid)
+func (r *RegisterService) MGetStudents(ctx context.Context, page int, size int) (int, []command.SchoolMemberCommand, error) {
+	count, members, err := r.Member.MGetStudents(ctx, page, size)
+	if err != nil {
+		return 0, nil, err
+	}
+	res := make([]command.SchoolMemberCommand, 0, len(members))
+	for _, cmd := range members {
+		res = append(res, command.SchoolMemberCommand{
+			NickName: cmd.NickName,
+			Uid:      cmd.Uid,
+			Age:      cmd.Age,
+			Password: cmd.Password,
+			Appid:    cmd.AppId,
+			Gender:   cmd.Gender,
+			Role:     cmd.Role,
+			ClassId:  cmd.ClassId,
+		})
+	}
+	return count, res, nil
+}
+
+func (r *RegisterService) RegisterAppId(ctx context.Context, appid int64, name string) error {
+	_, err := r.System.CreateByAppID(ctx, appid, name)
 	return err
 }
 
-func (r *RegisterService) GetAllAppID(ctx context.Context) ([]int64, error) {
+func (r *RegisterService) GetAllAppID(ctx context.Context) (map[int64]string, error) {
 	models, err := r.System.GetAll(ctx)
 	if err != nil {
 		return nil, err
 	}
-	result := make([]int64, 0, len(models))
+	result := make(map[int64]string, 0)
 	for _, m := range models {
-		result = append(result, m.AppId)
+		result[m.AppId] = m.SystemName
 	}
 	return result, nil
+}
+
+func (r *RegisterService) GetRoleById(ctx context.Context, id int64) (school_members.Role, error) {
+	member, err := r.Member.FindByID(ctx, id)
+	if err != nil {
+		return "", err
+	}
+	return member.Role, nil
+}
+
+func (r *RegisterService) GetUserInfoByID(ctx context.Context, id int64) (*school_members.Member, error) {
+	member, err := r.Member.FindByID(ctx, id)
+	if err != nil {
+		return nil, err
+	}
+	return member, nil
 }
