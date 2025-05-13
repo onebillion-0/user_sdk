@@ -15,8 +15,8 @@ func NewSchoolLoginController(sev *school_service.LoginService) *SchoolLoginCont
 	return &SchoolLoginController{service: sev}
 }
 
-func (c *SchoolLoginController) Login(ctx context.Context, uid int64, password string) (string, *command.SchoolMemberCommand, error) {
-	token, cmd, err := c.service.Login(ctx, uid, password)
+func (c *SchoolLoginController) Login(ctx context.Context, uid, appid int64, password string) (string, *command.SchoolMemberCommand, error) {
+	token, cmd, err := c.service.Login(ctx, uid, appid, password)
 	return token, cmd, err
 }
 

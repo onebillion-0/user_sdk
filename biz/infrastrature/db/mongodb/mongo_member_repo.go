@@ -47,7 +47,7 @@ func (repo *MongoSchoolMemberRepository) FindByID(ctx context.Context, uid int64
 	return &student, nil
 }
 
-func (repo *MongoSystemRepository) FindUser(ctx context.Context, uid int64, appid int64) (*school_members.Member, error) {
+func (repo *MongoSchoolMemberRepository) FindUser(ctx context.Context, uid int64, appid int64) (*school_members.Member, error) {
 	var student school_members.Member
 	filter := bson.M{"uid": uid, "appid": appid}
 	err := repo.collection.FindOne(ctx, filter).Decode(&student)

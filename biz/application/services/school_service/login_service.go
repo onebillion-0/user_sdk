@@ -31,8 +31,8 @@ func NewLoginService(stu repositories.MemberRepository) *LoginService {
 	}
 }
 
-func (s *LoginService) Login(ctx context.Context, uid int64, password string) (string, *command.SchoolMemberCommand, error) {
-	member, err := s.Student.FindByID(ctx, uid)
+func (s *LoginService) Login(ctx context.Context, uid, appid int64, password string) (string, *command.SchoolMemberCommand, error) {
+	member, err := s.Student.FindUser(ctx, uid, appid)
 	if errors.Is(err, mongo.ErrNoDocuments) {
 		return "", nil, constants.ERROR_INVALID_USERNAME_OR_PASSWORD
 	}
