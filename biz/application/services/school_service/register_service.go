@@ -91,7 +91,8 @@ func (r *RegisterService) GetRoleById(ctx context.Context, id int64) (school_mem
 }
 
 func (r *RegisterService) GetUserInfoByID(ctx context.Context, id int64) (*school_members.Member, error) {
-	member, err := r.Member.FindByID(ctx, id)
+	appid := ctx.Value("app_id")
+	member, err := r.Member.FindUser(ctx, id, appid.(int64))
 	if err != nil {
 		return nil, err
 	}
