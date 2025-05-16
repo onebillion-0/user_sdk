@@ -49,7 +49,7 @@ func (repo *MongoSchoolMemberRepository) FindByID(ctx context.Context, uid int64
 
 func (repo *MongoSchoolMemberRepository) FindUser(ctx context.Context, uid int64, appid int64) (*school_members.Member, error) {
 	var student school_members.Member
-	filter := bson.M{"uid": uid, "appid": appid}
+	filter := bson.M{"uid": uid, "app_id": appid}
 	err := repo.collection.FindOne(ctx, filter).Decode(&student)
 	if err != nil {
 		return nil, err
