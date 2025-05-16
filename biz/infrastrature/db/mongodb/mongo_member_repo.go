@@ -29,7 +29,7 @@ func NewMongoMemberRepository(db *mongo.Database, collectionName string) reposit
 func (repo *MongoSchoolMemberRepository) init() {
 	indexModel := mongo.IndexModel{
 		Keys:    bson.D{{Key: "uid", Value: 1}},
-		Options: options.Index().SetUnique(true),
+		Options: options.Index().SetUnique(false),
 	}
 	_, err := repo.collection.Indexes().CreateOne(context.TODO(), indexModel)
 	if err != nil {
