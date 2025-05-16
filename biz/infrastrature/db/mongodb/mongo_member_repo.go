@@ -70,7 +70,8 @@ func (repo *MongoSchoolMemberRepository) FindByUsername(ctx context.Context, use
 func (repo *MongoSchoolMemberRepository) MGetStudents(ctx context.Context, page int, size int) (int, []school_members.Member, error) {
 	skip := (page - 1) * size
 	limit := int64(size)
-	filter := bson.D{{"role", school_members.Student}}
+	appid := ctx.Value("app_id")
+	filter := bson.M{"role": school_members.Student, "app_id": appid.(int64)}
 	// 获取总记录数
 	total, err := repo.collection.CountDocuments(ctx, filter)
 	if err != nil {
