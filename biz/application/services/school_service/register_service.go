@@ -98,3 +98,12 @@ func (r *RegisterService) GetUserInfoByID(ctx context.Context, id int64) (*schoo
 	}
 	return member, nil
 }
+
+func (r *RegisterService) BatchGetUser(ctx context.Context, id []int64) ([]*school_members.Member, error) {
+	appid := ctx.Value("app_id")
+	member, err := r.Member.FindUsers(ctx, id, appid.(int64))
+	if err != nil {
+		return nil, err
+	}
+	return member, nil
+}

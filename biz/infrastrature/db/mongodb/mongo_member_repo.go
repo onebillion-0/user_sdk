@@ -47,6 +47,20 @@ func (repo *MongoSchoolMemberRepository) FindByID(ctx context.Context, uid int64
 	return &student, nil
 }
 
+func (repo *MongoSchoolMemberRepository) FindUsers(ctx context.Context, uidList []int64, appid int64) ([]*school_members.Member, error) {
+	var userList []*school_members.Member
+	filter := bson.D{{"uid", bson.M{"$in": uidList}}}
+	cur, err := repo.collection.Find(ctx, filter)
+	defer cur.Close(ctx)
+	if err != nil {
+		return nil, err
+	}
+	if err = cur.All(ctx, &userList); err != nil {
+		return nil, err
+	}
+	return userList, nil
+}
+
 func (repo *MongoSchoolMemberRepository) FindUser(ctx context.Context, uid int64, appid int64) (*school_members.Member, error) {
 	var student school_members.Member
 	filter := bson.M{"uid": uid, "app_id": appid}

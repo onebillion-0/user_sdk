@@ -8,6 +8,7 @@ import (
 type MemberRepository interface {
 	FindByID(ctx context.Context, uid int64) (*school_members.Member, error)
 	FindUser(ctx context.Context, uid int64, appid int64) (*school_members.Member, error)
+	FindUsers(ctx context.Context, uidList []int64, appid int64) ([]*school_members.Member, error)
 	FindByUsername(ctx context.Context, name string) (*school_members.Member, error)
 	MGetStudents(ctx context.Context, page int, size int) (int, []school_members.Member, error)
 	Create(ctx context.Context, user *school_members.Member) (*school_members.Member, error)
