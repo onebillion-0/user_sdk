@@ -53,8 +53,8 @@ func GetUserInfoByID(ctx context.Context, id int64) (*school_members.Member, err
 	return school_service.NewRegisterService(member, sys).GetUserInfoByID(ctx, id)
 }
 
-func BatchGetUserInfo(ctx context.Context, ids []int64) ([]school_members.Member, error) {
+func BatchGetUserInfo(ctx context.Context, ids []int64) ([]*school_members.Member, error) {
 	member := mongodb.NewMongoMemberRepository(mongodb.MongoClient, mongo_table.GetMemberCollectionName())
 	sys := mongodb.NewMongoSystemRepository(mongodb.MongoClient, mongo_table.GetSysCollectionName())
-	return school_service.NewRegisterService(member, sys).GetUserInfoByID(ctx, id)
+	return school_service.NewRegisterService(member, sys).BatchGetUser(ctx, ids)
 }
