@@ -14,4 +14,5 @@ type MemberRepository interface {
 	Create(ctx context.Context, user *school_members.Member) (*school_members.Member, error)
 	BatchCreate(ctx context.Context, users []*school_members.Member) error
 	Update(ctx context.Context, user *school_members.Member) (*school_members.Member, error)
+	DeleteMember(ctx context.Context, ids []int64) error
 }

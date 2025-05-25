@@ -2,7 +2,6 @@ package school_service
 
 import (
 	"context"
-
 	"github.com/onebillion-0/user_sdk/biz/application/command"
 	"github.com/onebillion-0/user_sdk/biz/domain/entity/school_members"
 	"github.com/onebillion-0/user_sdk/biz/domain/repositories"
@@ -106,4 +105,9 @@ func (r *RegisterService) BatchGetUser(ctx context.Context, id []int64) ([]*scho
 		return nil, err
 	}
 	return member, nil
+}
+
+func (r *RegisterService) DeleteMember(ctx context.Context, ids []int64) error {
+	err := r.Member.DeleteMember(ctx, ids)
+	return err
 }

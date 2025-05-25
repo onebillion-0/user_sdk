@@ -2,7 +2,6 @@ package user_sdk
 
 import (
 	"context"
-
 	"github.com/onebillion-0/user_sdk/biz/application/command"
 	"github.com/onebillion-0/user_sdk/biz/application/services/school_service"
 	"github.com/onebillion-0/user_sdk/biz/domain/entity/school_members"
@@ -57,4 +56,10 @@ func BatchGetUserInfo(ctx context.Context, ids []int64) ([]*school_members.Membe
 	member := mongodb.NewMongoMemberRepository(mongodb.MongoClient, mongo_table.GetMemberCollectionName())
 	sys := mongodb.NewMongoSystemRepository(mongodb.MongoClient, mongo_table.GetSysCollectionName())
 	return school_service.NewRegisterService(member, sys).BatchGetUser(ctx, ids)
+}
+
+func DeleteMember(ctx context.Context, ids []int64) error {
+	member := mongodb.NewMongoMemberRepository(mongodb.MongoClient, mongo_table.GetMemberCollectionName())
+	sys := mongodb.NewMongoSystemRepository(mongodb.MongoClient, mongo_table.GetSysCollectionName())
+	return school_service.NewRegisterService(member, sys).DeleteMember(ctx, ids)
 }
