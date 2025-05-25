@@ -179,7 +179,7 @@ func (repo *MongoSchoolMemberRepository) initMemberModels(users []*school_member
 
 func (repo *MongoSchoolMemberRepository) DeleteMember(ctx context.Context, students []int64) error {
 	filter := bson.M{"uid": bson.M{"$in": students}}
-	_, err := r.collection.DeleteMany(ctx, filter)
+	_, err := repo.collection.DeleteMany(ctx, filter)
 	if err != nil {
 		return err
 	}
