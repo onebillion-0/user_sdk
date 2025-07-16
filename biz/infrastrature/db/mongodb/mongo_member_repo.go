@@ -138,7 +138,6 @@ func (repo *MongoSchoolMemberRepository) BatchCreate(ctx context.Context, users 
 	if err != nil {
 		return err
 	}
-
 	models := make([]mongo.WriteModel, 0, len(users))
 	for _, user := range users {
 		model := mongo.NewInsertOneModel()

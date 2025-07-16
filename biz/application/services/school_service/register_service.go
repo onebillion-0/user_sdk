@@ -29,14 +29,15 @@ func (r *RegisterService) RegisterMembers(ctx context.Context, cmds []*command.S
 	users := make([]*school_members.Member, 0, len(cmds))
 	for _, cmd := range cmds {
 		user := &school_members.Member{
-			NickName: cmd.NickName,
-			Uid:      cmd.Uid,
-			Age:      cmd.Age,
-			Password: cmd.Password,
-			AppId:    cmd.Appid,
-			Gender:   cmd.Gender,
-			Role:     cmd.Role,
-			ClassId:  cmd.ClassId,
+			NickName:   cmd.NickName,
+			Uid:        cmd.Uid,
+			Age:        cmd.Age,
+			Password:   cmd.Password,
+			AppId:      cmd.Appid,
+			Gender:     cmd.Gender,
+			Role:       cmd.Role,
+			ClassId:    cmd.ClassId,
+			ExpireTime: cmd.ExpireTime, //秒级时间戳
 		}
 		users = append(users, user)
 	}

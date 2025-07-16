@@ -15,6 +15,7 @@ type CreateUserRequest struct {
 	PhoneNumber string `json:"phone_number"`
 	IdCard      string `json:"id_card"`
 	Age         string `json:"age"`
+	ExpireTime  int64  `json:"expire_time"`
 }
 
 func (c CreateUserRequest) ToCreateUserCommand() (*command.CreateUserCommand, error) {

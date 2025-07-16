@@ -17,4 +17,5 @@ type Member struct {
 	Role       Role   `json:"role" bson:"role"`
 	CreateTime int64  `json:"create_time" bson:"create_time"`
 	UpdateTime int64  `json:"update_time" bson:"update_time"`
+	ExpireTime int64  `json:"expire_time" bson:"expire_time"`
 }
