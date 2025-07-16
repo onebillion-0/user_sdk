@@ -5,6 +5,7 @@ import (
 	"github.com/onebillion-0/user_sdk/biz/application/command"
 	"github.com/onebillion-0/user_sdk/biz/domain/entity/school_members"
 	"github.com/onebillion-0/user_sdk/biz/domain/repositories"
+	"time"
 )
 
 type RegisterService struct {
@@ -111,4 +112,16 @@ func (r *RegisterService) BatchGetUser(ctx context.Context, id []int64) ([]*scho
 func (r *RegisterService) DeleteMember(ctx context.Context, ids []int64) error {
 	err := r.Member.DeleteMember(ctx, ids)
 	return err
+}
+
+func (r *RegisterService) CheckExpireTime(ctx context.Context, uid int64, appid int64) (bool, error) {
+	member, err := r.Member.FindUser(ctx, uid, appid)
+	if err != nil {
+		return true, err
+	}
+	now := time.Now().Unix()
+	if member.ExpireTime < now {
+		return true, nil
+	}
+	return false, nil
 }

@@ -63,3 +63,9 @@ func DeleteMember(ctx context.Context, ids []int64) error {
 	sys := mongodb.NewMongoSystemRepository(mongodb.MongoClient, mongo_table.GetSysCollectionName())
 	return school_service.NewRegisterService(member, sys).DeleteMember(ctx, ids)
 }
+
+func CheckExpireTime(ctx context.Context, uid, aid int64) (bool, error) {
+	member := mongodb.NewMongoMemberRepository(mongodb.MongoClient, mongo_table.GetMemberCollectionName())
+	sys := mongodb.NewMongoSystemRepository(mongodb.MongoClient, mongo_table.GetSysCollectionName())
+	return school_service.NewRegisterService(member, sys).CheckExpireTime(ctx, uid, aid)
+}
