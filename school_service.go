@@ -58,6 +58,7 @@ func BatchGetUserInfo(ctx context.Context, ids []int64) ([]*school_members.Membe
 	return school_service.NewRegisterService(member, sys).BatchGetUser(ctx, ids)
 }
 
+// 1111
 func DeleteMember(ctx context.Context, ids []int64) error {
 	member := mongodb.NewMongoMemberRepository(mongodb.MongoClient, mongo_table.GetMemberCollectionName())
 	sys := mongodb.NewMongoSystemRepository(mongodb.MongoClient, mongo_table.GetSysCollectionName())
